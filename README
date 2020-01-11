@@ -1,0 +1,43 @@
+Compilation:
+	Only golang standard library was used so only need to have golang installed to compile
+    Download Libraries by running
+        $go get github.com/mackerelio/go-osstat/network
+        $go get github.com/mackerelio/go-osstat/disk
+	To compile run in source direction
+		$go build
+	
+	After it is compiled make sure to update the package directory by running
+		$sudo cp ./source  ../netdrive/usr/local/bin/netDrive
+		$sudo chmod 755  ../netdrive/usr/local/bin/netDrive
+		$sudo chown root:root ../netdrive/usr/local/bin/netDrive
+Running Service:
+	To start run
+		$sudo /etc/init.d/netDrive start &
+	To Stop
+		$sudo /etc/init.d/netDrive stop
+	
+	Logs are stored at /usr/local/bin/drive.txt  and /usr/local/bin/network.txt
+Building .deb
+	To build a .deb you put the files in a tree such as they will be installed with the root folder of the package acting as / in your filesystem
+		The file tree of the package is
+			cpuUsage/ (ROOT)
+				DEBIAN/
+					control
+				etc/
+					init.d/
+						netDrive
+				usr/
+					local/
+						bin/
+							netDrive
+							drive.txt
+                            network.txt
+		To edit package edit this filetree
+		netDrive/DEBIAN/control holds metadata needed for the package but it is mainly just description name and maintainer for repositories
+		
+		To build package (Run all command in highest folder):
+			$dpkg-deb --build netdrive
+		To Install:
+			 $sudo dpkg -i netdrive.deb
+		The .deb file can be installed on any ubuntu system and put onto a repo for quick instalation
+NOTE: Due to linux updating drive and network io less frequently then cpu usage I lowered the logs from 1 every 2 seconds to 1 every 30 to make it not wasteful and disorganized by 

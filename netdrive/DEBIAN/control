@@ -1,0 +1,5 @@
+Package: netDrive
+Version: 0.1
+Maintainer: Aeclox
+Architecture: all
+Description: Network and drive logger
